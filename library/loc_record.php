@@ -2,7 +2,7 @@
 <html >
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Sri Senbaga Vinayagar Temple</title>
+        <title>RISE Lab Library</title>
         <link href="/library/css/default.css" rel="stylesheet" type="text/css" />
     </head>
 
@@ -17,17 +17,16 @@
 
 
            <?php
-  $link = mysql_connect("localhost", "sudar", "sudar")or die("Could not connect: " . mysql_error());
-  mysql_select_db('library', $link) or die ( mysql_error());
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
 
-  
+
 ?>
 
 <form action="loc_comit.php?" method="post">
 
         <div id="UILabel">Location Name</div>
   <input class="form_tfield" type="text" name="loc_name" value="" /><br><br>
- 
+
   <br></br>
 <input type="submit" value="Submit" />
 <input  type="reset" value="Clear Form" />

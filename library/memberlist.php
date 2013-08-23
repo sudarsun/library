@@ -1,6 +1,6 @@
 <?php
-$link=mysql_connect('localhost','sudar','sudar') or die (mysql_error());
-mysql_select_db("library") or die (mysql_error());
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
+
 $query = "SELECT * FROM member order by fname, lname";
 $result = mysql_query($query,$link)
 or die(mysql_error());
@@ -8,7 +8,7 @@ $num_supp_name = mysql_num_rows($result);?>
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-        <title>RISE Lab Lending Library::View Members</title>
+        <title>RISE Lab Library::View Members</title>
 
         <link href="/library/css/default.css" rel="stylesheet" type="text/css" />
     </head>

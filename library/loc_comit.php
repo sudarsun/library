@@ -1,8 +1,6 @@
 <?php
 // COMMIT ADD
-  $link = mysql_connect("localhost", "sudar", "sudar")
-    or die("Could not connect: " . mysql_error());
-  mysql_select_db('library', $link)
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
     or die ( mysql_error());
 
           $sql = "INSERT INTO location
@@ -10,7 +8,7 @@
                     )
                   VALUES
                    ('" . $_POST['loc_name'] . "')";
- 
+
 
   if (isset($sql) && !empty($sql)) {
     echo "<!--" . $sql . "-->";

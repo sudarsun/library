@@ -6,9 +6,7 @@ if ( isset($_SESSION["admin"]) and $_SESSION["admin"]=="god" )
 {
     $admin = 1;
 }
-
-$link=mysql_connect('localhost','sudar','sudar') or die (mysql_error());
-mysql_select_db("library") or die (mysql_error());
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
 $query = "SELECT * FROM book";
 $result = mysql_query($query,$link)
 or die(mysql_error());
@@ -16,7 +14,7 @@ or die(mysql_error());
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=unicode UTF-8" />
-        <title>RISE Lab Lending Library::View Booklist</title>
+        <title>RISE Lab Library::View Booklist</title>
 
         <link href="/library/css/default.css" rel="stylesheet" type="text/css" />
     </head>

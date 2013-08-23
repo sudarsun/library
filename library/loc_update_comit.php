@@ -1,16 +1,14 @@
 <?php
 // COMMIT ADD
-  $link = mysql_connect("localhost", "sudar", "sudar")
-    or die("Could not connect: " . mysql_error());
-  mysql_select_db('library', $link)
-    or die ( mysql_error());
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
+
   switch ($_GET['action']) {
     case "edit":
       switch ($_GET['type']) {
         case "cat":
           $sql = "UPDATE location SET
                    loc_name='" . $_POST['loc_name'] . "'
-                    
+
                   WHERE loc_name = '" . $_GET['id'] . "'";
 
           break;

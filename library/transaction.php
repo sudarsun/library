@@ -5,7 +5,7 @@ session_start();
 <html >
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>RISE Lab Lending Library::Transactions</title>
+        <title>RISE Lab Library::Transactions</title>
         <link href="/library/css/default.css" rel="stylesheet" type="text/css" />
     </head>
 
@@ -16,11 +16,11 @@ session_start();
             <div id="page">
                 <div id="content">
                     <div id="welcome">
-                        <h2>RISE Lab Lending Library</h2>
+                        <h2>RISE Lab Library</h2>
                         <!--body-->
                     <p>
 
-                         Welcome to RISE Lab Lending Library.
+                         Welcome to RISE Lab Library.
                             Here you will find the complete collection of books in our library.
                             Please contact our staff if you want to borrow any books.
                         </p>

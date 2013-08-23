@@ -1,6 +1,6 @@
 <?php
-$link=mysql_connect('localhost','sudar','sudar') or die (mysql_error());
-mysql_select_db("library") or die (mysql_error());
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
+
 $query = "SELECT * FROM location ";
 $result = mysql_query($query,$link)
 or die(mysql_error());
@@ -8,7 +8,7 @@ or die(mysql_error());
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Sri Senbaga Vinayagar Temple</title>
+        <title>RISE Lab Library</title>
 
         <link href="/library/css/default.css" rel="stylesheet" type="text/css" />
     </head>
