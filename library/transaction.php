@@ -16,7 +16,7 @@ session_start();
             <div id="page">
                 <div id="content">
                     <div id="welcome">
-                        <h2>RISE Lab Library</h2>
+                        <h2>Welcome to RISE Lab Library</h2>
                         <!--body-->
                     <p>
 

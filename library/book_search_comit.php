@@ -1,5 +1,15 @@
 <?php
+session_start();
+$admin = 0;
+if ( isset($_SESSION["admin"]) and $_SESSION["admin"]=="god" )
+{
+    $admin = 1;
+}
+
 include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
+
+$search_type = $_REQUEST[search_type];//$_POST[search_type];
+$keyword = $_REQUEST[keyword]; //$_POST[keyword];
 
 ?>
 <html>
@@ -17,41 +27,64 @@ include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
                 <div id="content">
                     <div id="welcome">
 
- <h2 class="head2" ><a class="head">View / Edit Book Master Data</a></h2>
+ <h2 class="head2" ><a class="head">View Books</a></h2>
 
  <table class="aatable">
 <tr>
-<th>Title</th>
-<th >Author</th>
-<th >Publication</th>
-<th >Edition</th>
-<th >Year</th>
-<th >No of Copy Avail</th>
-<th >Remark</th>
+<th><a href="book_search_comit.php?sortby=title&search_type=<?php echo $search_type?>&keyword=<?php echo $keyword?>">Title</a></th>
+<th ><a href="book_search_comit.php?sortby=author&search_type=<?php echo $search_type?>&keyword=<?php echo $keyword?>">Author</a></th>
+<th ><a href="book_search_comit.php?sortby=publication&search_type=<?php echo $search_type?>&keyword=<?php echo $keyword?>">Publication</a></th>
+<th ><a href="book_search_comit.php?sortby=edition&search_type=<?php echo $search_type?>&keyword=<?php echo $keyword?>">Edition</a></th>
+<th ><a href="book_search_comit.php?sortby=year&search_type=<?php echo $search_type?>&keyword=<?php echo $keyword?>">Year</a></th>
+<th >Copies</th>
+<th >Remarks</th>
+<?php
+if ( $admin == 1 )
+    echo "<th>&nbsp;</th>";
+?>
 </tr>
 <?php
 
-if ($_POST[search_type]=='all'){
-$query = "SELECT * FROM book WHERE
-title LIKE '%$_POST[keyword]%' ||
-author LIKE '%$_POST[keyword]%'||
-publication LIKE '%$_POST[keyword]%'||
-year LIKE '%$_POST[keyword]%'||
-related_name LIKE '%$_POST[keyword]%'||
-book_remark LIKE '%$_POST[keyword]%'
-    ";
-$result = mysql_query($query,$link)
-or die(mysql_error());
+$sortby = "";
+if ( isset( $_REQUEST["sortby"] ) )
+{
+    $sortby = $_REQUEST["sortby"];
 }
 
-else {
-$query = "SELECT * FROM book WHERE $_POST[search_type] LIKE '%$_POST[keyword]%'";
-$result = mysql_query($query,$link)
-or die(mysql_error());
+//if ($_POST[search_type]=='all')
+if ( $search_type == "all" )
+{
+    $query = "SELECT * FROM book WHERE
+			    title LIKE '%$keyword%' ||
+			    author LIKE '%$keyword%'||
+			    publication LIKE '%$keyword%'||
+			    year LIKE '%$keyword%'||
+			    related_name LIKE '%$keyword%'||
+			    book_remark LIKE '%$keyword%'";
+    if ( $sortby != "" )
+	$query .= " order by $sortby";
+
+    $result = mysql_query($query,$link) or die(mysql_error());
+}
+else
+{
+    $query = "SELECT * FROM book WHERE $search_type LIKE '%$keyword%'";
+    if ( $sortby != "" )
+	$query .= " order by $sortby";
+
+    $result = mysql_query($query,$link) or die(mysql_error());
 }
 
-
+$bgcolor="#ffffff";
+$flag = 1;
 while ($row = mysql_fetch_array($result)) {
+
+    if ( $flag )
+	$bgcolor="#eeeeee";
+    else
+	$bgcolor="#dfdfdf";
+
+    $flag = !$flag;
 
 $book_id = $row['book_id'];
 $title = $row['title'];
@@ -63,13 +96,18 @@ $total_holding=$row['total_holding'];
 $book_remark=$row['book_remark'];
 
 echo "<tr>";
-echo "<td >".$title."</td>";
-echo "<td>".$author."</td>";
-echo "<td>".$publication."</td>";
-echo "<td >".$edition."</td>";
-echo "<td>".$year."</td>";
-echo "<td >".$total_holding."</td>";
-echo "<td>".$book_remark."</td>";
+echo "<td bgcolor='$bgcolor'>".$title."</td>";
+echo "<td bgcolor='$bgcolor'>".$author."</td>";
+echo "<td bgcolor='$bgcolor'>".$publication."</td>";
+echo "<td bgcolor='$bgcolor' >".$edition."</td>";
+echo "<td bgcolor='$bgcolor'>".$year."</td>";
+echo "<td bgcolor='$bgcolor' >".$total_holding."</td>";
+echo "<td bgcolor='$bgcolor'>".$book_remark."</td>";
+
+if ( $admin == 1 )
+{
+    echo "<td bgcolor='$bgcolor'><a href='book_lending.php?book_id=$book_id&book_name=$title - $author'>Lend</a></td>";
+}
 
 echo "</tr>";
 }

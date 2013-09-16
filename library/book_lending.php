@@ -1,4 +1,25 @@
 <?php
+session_start();
+$admin = 0;
+if ( isset($_SESSION["admin"]) and $_SESSION["admin"]=="god" )
+{
+    $admin = 1;
+}
+else
+{
+    echo "<h2>You should not be here!</h2>";
+    echo "<h4>you will be redirected to home page in 2 seconds...</h4>";
+    header("refresh:2; url=../index.php");
+    exit;
+}
+
+$book_id = 0;
+if ( isset( $_REQUEST[book_id] ) )
+{
+    $book_id = $_REQUEST[book_id];
+    $book_title = $_REQUEST[book_name];
+}
+
   include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
 ?>
 <html >
@@ -18,11 +39,15 @@
                         <h2>Book Lending</h2>
 
 <form action="book_lending_comit.php?action=add&type=book" method="post">
-    <div id="UILabel">Book Name</div>
 
+    <div id="UILabel">Book Name</div>
+<?php
+if ( $book_id == 0 )
+{
+    ?>
               <select name="loan_book_id" >
-                <option value="" selected >Select a serial number...</option>
- <?php $book_sql="select * from book";
+                <option value="" selected >Select the book..</option>
+ <?php $book_sql="select * from book order by title";
 $result=mysql_query($book_sql) or die (mysql_error());
 while ($row=mysql_fetch_array($result)) {
     $slno[$row['book_id']]=$row['title']." - ".$row['author'];
@@ -30,12 +55,21 @@ while ($row=mysql_fetch_array($result)) {
 
   foreach ($slno as $book_id => $title_author) {
 ?>
-        <option value="<?php echo $book_id; ?>" ><?php
-        echo $title_author; ?></option>
+        <option value="<?php echo $book_id; ?>" ><?php echo $title_author; ?></option>
 <?php
   }
 ?>
-      </select><br><br><br>
+      </select>
+<?php
+}
+else
+{
+    echo "<input type=hidden name=loan_book_id value=$book_id/>";
+    echo "<input class=form_tfield_long type=text readonly=true value='$book_title'/>";
+}
+?>
+
+      <br><br><br>
     <div id="UILabel">Member ID</div>
 
               <select name="loan_mem_name" >

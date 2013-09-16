@@ -28,7 +28,7 @@ else
 $redirect = '/library/library/admin.php';
 ?>
 <SCRIPT LANGUAGE="JavaScript">
-redirTime = "1000";
+redirTime = "500";
 redirURL = "<?php echo $redirect ?>";
 function redirTimer() { self.setTimeout("self.location.href = redirURL;",redirTime); }
 </script>

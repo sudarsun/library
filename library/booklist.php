@@ -6,8 +6,19 @@ if ( isset($_SESSION["admin"]) and $_SESSION["admin"]=="god" )
 {
     $admin = 1;
 }
+
 include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
-$query = "SELECT * FROM book";
+
+if ( isset( $_REQUEST["sortby"] ) )
+{
+    $sortkey = $_REQUEST["sortby"];
+    $query = "SELECT * FROM book order by $sortkey";
+}
+else
+{
+    $query = "SELECT * FROM book order by title";
+}
+
 $result = mysql_query($query,$link)
 or die(mysql_error());
 ?>
@@ -30,12 +41,12 @@ or die(mysql_error());
 
  <table class="aatable">
 <tr>
-<th>Title</th>
-<th >Author</th>
-<th >Publication</th>
-<th >Edition</th>
-<th >Year</th>
-<th >Copies Avail</th>
+<th><a href='booklist.php?sortby=title'>Title</a></th>
+<th ><a href='booklist.php?sortby=author'>Author</th>
+<th ><a href='booklist.php?sortby=publication'>Publication</th>
+<th ><a href='booklist.php?sortby=edition'>Edition</th>
+<th ><a href='booklist.php?sortby=year'>Year</th>
+<th ><a href='booklist.php?sortby=total_holding'>Copies</th>
 <th >Remark</th>
 <?php if ( $admin == 1 )
 {
@@ -46,31 +57,40 @@ echo "<th></th>";
 </tr>
 <?php
 
-while ($row = mysql_fetch_array($result)) {
-$book_id = $row['book_id'];
-$title = $row['title'];
-$author=$row['author'];
-$publication=$row['publication'];
-$edition=$row['edition'];
-$year=$row['year'];
-$total_holding=$row['total_holding'];
-$book_remark=$row['book_remark'];
+$flag = 1;
+while ($row = mysql_fetch_array($result))
+{
+    if ( $flag )
+	$bgcolor="#eeeeee";
+    else
+	$bgcolor="#dfdfdf";
 
-echo "<tr>";
-echo "<td >".$title."</td>";
-echo "<td>".$author."</td>";
-echo "<td>".$publication."</td>";
-echo "<td >".$edition."</td>";
-echo "<td>".$year."</td>";
-echo "<td >".$total_holding."</td>";
-echo "<td>".$book_remark."</td>";
+    $flag = !$flag;
+
+    $book_id = $row['book_id'];
+    $title = $row['title'];
+    $author=$row['author'];
+    $publication=$row['publication'];
+    $edition=$row['edition'];
+    $year=$row['year'];
+    $total_holding=$row['total_holding'];
+    $book_remark=$row['book_remark'];
+
+    echo "<tr>";
+    echo "<td bgcolor='$bgcolor'>".$title."</td>";
+    echo "<td bgcolor='$bgcolor'>".$author."</td>";
+    echo "<td bgcolor='$bgcolor'>".$publication."</td>";
+    echo "<td bgcolor='$bgcolor'>".$edition."</td>";
+    echo "<td bgcolor='$bgcolor'>".$year."</td>";
+    echo "<td  bgcolor='$bgcolor'>".$total_holding."</td>";
+    echo "<td bgcolor='$bgcolor'>".$book_remark."</td>";
 
 ?>
 <?php
 if ($admin==1)
 {
 ?>
-<td>    <a href="book_update.php?action=edit&id=<?php echo $row['book_id']; ?>">[EDIT]</a></td>
+<td bgcolor='$bgcolor'>    <a href="book_update.php?action=edit&id=<?php echo $row['book_id']; ?>">[EDIT]</a></td>
 <?php
 }
 ?>
