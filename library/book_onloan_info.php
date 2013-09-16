@@ -1,10 +1,10 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';);
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
 
 ?>
 <html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=unicode UTF-8" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>RISE Lab Library</title>
 
         <link href="/library/css/default.css" rel="stylesheet" type="text/css" />
@@ -35,8 +35,15 @@ $query = "SELECT * FROM book WHERE  book_id LIKE '%$_GET[book_id]%'";
 $result = mysql_query($query,$link);
 
 
-
+$flag = 1;
 while ($row = mysql_fetch_array($result)) {
+
+    if ( $flag )
+	$bgcolor="#eeeeee";
+    else
+	$bgcolor="#dfdfdf";
+
+    $flag = !$flag;
 
 $book_id = $row['book_id'];
 $title = $row['title'];
@@ -48,13 +55,13 @@ $total_holding=$row['total_holding'];
 $book_remark=$row['book_remark'];
 
 echo "<tr>";
-echo "<td >".$title."</td>";
-echo "<td>".$author."</td>";
-echo "<td>".$publication."</td>";
-echo "<td >".$edition."</td>";
-echo "<td>".$year."</td>";
-echo "<td >".$total_holding."</td>";
-echo "<td>".$book_remark."</td>";
+echo "<td bgcolor='$bgcolor' >".$title."</td>";
+echo "<td bgcolor='$bgcolor'>".$author."</td>";
+echo "<td bgcolor='$bgcolor'>".$publication."</td>";
+echo "<td bgcolor='$bgcolor' >".$edition."</td>";
+echo "<td bgcolor='$bgcolor'>".$year."</td>";
+echo "<td bgcolor='$bgcolor' >".$total_holding."</td>";
+echo "<td bgcolor='$bgcolor'>".$book_remark."</td>";
 
 echo "</tr>";
 }
@@ -70,7 +77,7 @@ echo "</tr>";
                 <!-- end div#sidebar -->
                 <div style="clear: both; height: 1px"></div>
             </div>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php'; ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/library/includes/footer.php'; ?>
         </div>
         <!-- end div#wrapper -->
     </body>

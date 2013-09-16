@@ -48,16 +48,12 @@ if ( $book_id == 0 )
               <select name="loan_book_id" >
                 <option value="" selected >Select the book..</option>
  <?php $book_sql="select * from book order by title";
-$result=mysql_query($book_sql) or die (mysql_error());
-while ($row=mysql_fetch_array($result)) {
-    $slno[$row['book_id']]=$row['title']." - ".$row['author'];
-}
-
-  foreach ($slno as $book_id => $title_author) {
-?>
-        <option value="<?php echo $book_id; ?>" ><?php echo $title_author; ?></option>
-<?php
-  }
+    $result=mysql_query($book_sql) or die (mysql_error());
+    while ($row=mysql_fetch_array($result))
+    {
+	echo "<option value='$row[book_id]'>$row[title] - $row[author]</option>";
+	//$slno[$row['book_id']]=$row['title']." - ".$row['author'];
+    }
 ?>
       </select>
 <?php
@@ -77,7 +73,7 @@ else
  <?php $mem_sql="select * from member";
 $result=mysql_query($mem_sql) or die (mysql_error());
 while ($row=mysql_fetch_array($result)) {
-    $mem_name[$row['reader_id']]=$row['nric'];
+    $mem_name[$row['reader_id']]=$row['nric']." ".$row[fname]." ".$row[lname];
 }
 
   foreach ($mem_name as $reader_id => $nric) {

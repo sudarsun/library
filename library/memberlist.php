@@ -34,8 +34,14 @@ $num_supp_name = mysql_num_rows($result);?>
 </tr>
 <?php
 
+$flag = 1;
 while ($row = mysql_fetch_array($result)) {
+    if ( $flag )
+	$bgcolor="#eeeeee";
+    else
+	$bgcolor="#dfdfdf";
 
+    $flag = !$flag;
 $nric = $row['nric'];
 $fname = $row['fname'];
 $lname = $row['lname'];
@@ -44,16 +50,16 @@ $mobilephone=$row['mobilephone'];
 $mem_remark=$row['mem_remark'];
 
 echo "<tr>";
-echo "<td align='center'>".$nric."</td>";
+echo "<td bgcolor='$bgcolor' align='center'>".$nric."</td>";
 //echo "<td>$fname $lname<br/>$address<br/>$mobilephone<br/></td>";
-echo "<td align='center' >".$fname."</td>";
-echo "<td align='center'>".$lname."</td>";
-echo "<td>".$address."</td>";
-echo "<td align='center'>".$mobilephone."</td>";
-echo "<td>".$mem_remark."</td>";
+echo "<td bgcolor='$bgcolor' align='center' >".$fname."</td>";
+echo "<td bgcolor='$bgcolor' align='center'>".$lname."</td>";
+echo "<td bgcolor='$bgcolor'>".$address."</td>";
+echo "<td bgcolor='$bgcolor' align='center'>".$mobilephone."</td>";
+echo "<td bgcolor='$bgcolor'>".$mem_remark."</td>";
 
 ?>
-<td><a href="member_update.php?action=edit&id=<?php echo $row['nric']; ?>">[EDIT]</a> </td>
+<td bgcolor='$bgcolor'><a href="member_update.php?action=edit&id=<?php echo $row['nric']; ?>">[EDIT]</a> </td>
 <?php
 echo "</tr>";
 }

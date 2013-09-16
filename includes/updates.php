@@ -1,5 +1,7 @@
-<?php $link=mysql_connect('localhost','sudar','sudar') or die (mysql_error());
-mysql_select_db("library") or die (mysql_error());
+<?php
+
+include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
+
 $query = "SELECT * FROM book";
 $result = mysql_query($query,$link)
 or die(mysql_error());

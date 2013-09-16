@@ -151,7 +151,7 @@ a.head{
 #menu {
      position:relative;top:-2px;
      height:109px;
-     background: url(images/title2.png) no-repeat left bottom;
+     /*background: url(images/title2.png) no-repeat left bottom;*/
      border-bottom-width: 1px;
     border-bottom-style: solid;
      border-top-width: 1px;

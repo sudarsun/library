@@ -32,7 +32,11 @@ include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
       or die("Invalid query: " . mysql_error());
 ?>
   <p align="center" style="color:#FF0000">
-    Done. <a href="/library/library/member_record.php">Goto Add Member Data Page</a>
+    <h3>Done! You will be redirected to Add Member page in 2 seconds...</h3>
+    <?php
+    header( "refresh:2; url=member_record.php" );
+    exit;
+    ?>
   </p>
 <?php
   }

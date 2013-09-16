@@ -17,14 +17,6 @@ include $_SERVER['DOCUMENT_ROOT'] .'/library/includes/dbconnect.php';
                     <div id="welcome">
                         <h2>Add New Book Master Data</h2>
 
-
-           <?php
-  $link = mysql_connect("localhost", "sudar", "sudar")or die("Could not connect: " . mysql_error());
-  mysql_select_db('library', $link) or die ( mysql_error());
-
-
-?>
-
 <form action="book_comit.php?action=add&type=book" method="post">
 <!--  <div id="UILabel">Serial Number</div>
   <input class="form_tfield" type="text" name="slno" value="" /><br><br>-->
