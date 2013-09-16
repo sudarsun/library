@@ -87,6 +87,15 @@ while ($row = mysql_fetch_array($result)) {
     $flag = !$flag;
 
 $book_id = $row['book_id'];
+
+$bresult = mysql_query( "select loan_mem_name, lname, fname from loan l, member m where l.loan_mem_name=m.reader_id and loan_book_id = $book_id" ) or die(mysql_error());
+$taken_by = "";
+if ( $brow = mysql_fetch_array($bresult) )
+{
+    $taken_by = $brow[fname]." ".$brow[lname];
+    $bgcolor = '#FFC0C0';
+}
+
 $title = $row['title'];
 $author=$row['author'];
 $publication=$row['publication'];
@@ -102,9 +111,10 @@ echo "<td bgcolor='$bgcolor'>".$publication."</td>";
 echo "<td bgcolor='$bgcolor' >".$edition."</td>";
 echo "<td bgcolor='$bgcolor'>".$year."</td>";
 echo "<td bgcolor='$bgcolor' >".$total_holding."</td>";
-echo "<td bgcolor='$bgcolor'>".$book_remark."</td>";
+echo "<td bgcolor='$bgcolor'>".$taken_by."</td>";
+//echo "<td bgcolor='$bgcolor'>".$book_remark."</td>";
 
-if ( $admin == 1 )
+if ( $admin == 1 and $taken_by == "" )
 {
     echo "<td bgcolor='$bgcolor'><a href='book_lending.php?book_id=$book_id&book_name=$title - $author'>Lend</a></td>";
 }
